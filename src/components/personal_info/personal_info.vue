@@ -1,0 +1,120 @@
+<template>
+  <div>
+    <header>
+      <span @click="_back">＜</span>
+      <span>编辑个人资料</span>
+      <span class="white-color font-md" @click="_saveInfo">保存</span>
+    </header>
+    <content>
+      <div class="avator">
+        <p>
+          <img src="../../assets/default_avator.png" alt="">
+        </p>
+        <p>
+          <label for="">上传头像</label>
+          <input type="file" name="" id="" class="avator-input">
+        </p>
+      </div>
+      <div class="flex info_form white-bg">
+        <input type="text" placeholder="昵称" v-model="user.name">
+        <div class="flex">
+          <input type="date" placeholder="生日" v-model="user.birth">
+          <p class="font-md">
+            <span @click="_choose" v-bind:class="{active:isActive == 1 ? true : false}" data-index="1">男</span>
+            <span @click="_choose" v-bind:class="{active:isActive == 2 ? true : false}" data-index="2">女</span>
+          </p>
+        </div>
+        <textarea placeholder="个人简介" v-model="user.desc"></textarea>
+      </div>
+    </content>
+  </div>
+</template>
+
+<script>
+  import {initHeight} from '@/common/js/initHeight'
+  export default {
+    name: "personal_info",
+    data() {
+      return {
+        isActive: 1,
+        user: {
+          sex: 1
+        }
+      }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        // initHeight()
+        this._getInfo()
+      })
+    },
+    methods: {
+      _choose(e) {
+        e = e || window.event
+        this.isActive = Number(e.target.dataset.index)
+        this.user.sex = Number(e.target.dataset.index)
+      },
+      _saveInfo() {
+        if (!this.user.name || !this.user.birth || !this.user.sex || !this.user.desc) {
+          alert('请填写完整信息！')
+          return
+        }
+        localStorage.loginUser = JSON.stringify(this.user)
+        if (true) {
+          alert('修改成功！')
+          this.$router.push('/personal')
+        }
+      },
+      _back() {
+        this.$router.push('/personal')
+      },
+      _getInfo() {
+        if (localStorage.getItem('loginUser')) {
+          this.user = JSON.parse(localStorage.getItem('loginUser'))
+          this.isActive = this.user.sex
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .info_form{
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .info_form input,textarea{
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid rgb(250, 250, 250);
+    box-sizing: border-box;
+    padding-left: 10px;
+    font: normal 13px/20px '微软雅黑';
+  }
+  textarea{
+    height: 40px;
+  }
+  .info_form>div{
+    justify-content: space-between;
+    align-items: center;
+  }
+  span.active{
+    background: #0f0f0f;
+    padding: 3px 10px;
+    border-radius: 10px;
+    color: #f0f0f0;
+  }
+  .avator{
+    position: relative
+  }
+  .avator-input{
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+  }
+</style>

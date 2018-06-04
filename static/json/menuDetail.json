@@ -1,0 +1,71 @@
+{
+  "code": 200,
+  "data": {
+    "id": "1",
+    "authorName": "John",
+    "name": "hhhhh",
+    "pic": "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png",
+    "avator": "https://oimagec1.ydstatic.com/image?id=7087741631111307257&product=adpublish&w=640&h=480&sc=0&rm=2&gsb=0&gsbd=60",
+    "date": "2018-05-29",
+    "material": [
+      {
+        "id": 1,
+        "name": "肉",
+        "num": "800g"
+      },
+      {
+        "id": 2,
+        "name": "生抽",
+        "num": "30g"
+      },
+      {
+        "id": 3,
+        "name": "老抽",
+        "num": "20g"
+      },
+      {
+        "id": 4,
+        "name": "豆瓣酱",
+        "num": "20g"
+      },
+      {
+        "id": 5,
+        "name": "糖",
+        "num": "10g"
+      }
+    ],
+    "step": [
+      {
+        "id": 1,
+        "name": "第一步",
+        "num": "牛里脊肉切丁，加姜末，酱油，白糖，黑胡椒（可多一点），用手抓匀，放冰箱腌20分钟",
+        "stepPic": "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+      },
+      {
+        "id": 2,
+        "name": "第二步",
+        "num": "蒜切末，青、红椒切丁。",
+        "stepPic": "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+      },
+      {
+        "id": 3,
+        "name": "第三步",
+        "num": "提前准备一碗调味汁:蚝油，白糖，生抽，鸡精，少许盐搅匀。",
+        "stepPic": "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+      },
+      {
+        "id": 4,
+        "name": "第四步",
+        "num": "20分钟后从冰箱取出牛肉丁，加料酒，干淀粉，香油，用筷子搅拌均匀。",
+        "stepPic": "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+      },
+      {
+        "id": 5,
+        "name": "第五步",
+        "num": "起油锅，小火🔥放入蒜末煸出香味。",
+        "stepPic": "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png"
+      }
+    ]
+
+  }
+}
