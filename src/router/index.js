@@ -7,6 +7,8 @@ import Personal from '@/components/personal/personal'
 import PersonalInfo from '@/components/personal_info/personal_info'
 import menuDetail from '@/components/menu_detail/menu_detail'
 import MenuVote from '@/components/menu_vote/menu_vote'
+import Login from '@/components/login/login'
+import Register from '@/components/register/register'
 
 Vue.use(Router)
 
@@ -46,6 +48,16 @@ export default new Router({
       path: '/menu_vote',
       name: 'MenuVote',
       component: MenuVote
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ]
 })

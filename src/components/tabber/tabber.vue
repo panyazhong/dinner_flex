@@ -72,6 +72,7 @@
     position: fixed;
     bottom: -1px;
     width: 100%;
+    z-index: 999;
   }
   .flex>div{
     flex: 0 0 25%;

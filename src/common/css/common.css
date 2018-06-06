@@ -34,6 +34,42 @@ content{
   flex-direction: column;
   padding: 10px 20px;
 }
+
+/*login  register*/
+.login{
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+  padding-top: 50px;
+  top: 0;
+  left: 0;
+  background: rgb(240, 243, 244);
+}
+.login img{
+  width: 200px;
+  align-self: center;
+}
+.login-input{
+  flex-direction: column;
+  width: 60%;
+  align-self: center;
+  margin-top: 20px;
+}
+.login-input input{
+  height: 30px;
+  border: 1px solid rgb(240, 243, 244);
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding-left: 10px;
+}
+.login-input input:nth-of-type(3){
+  margin-top: 20px;
+  letter-spacing: 10px;
+  font-size: 17px;
+}
 /*bg*/
 .white-bg{
   background: #fff;
@@ -55,4 +91,7 @@ content{
 }
 .normal-color{
   color: rgb(255, 187, 68);
+}
+.white-color{
+  color: #fff;
 }

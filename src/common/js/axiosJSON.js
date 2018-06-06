@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Qs from 'qs'
 
+axios.default.withCredentials = true
+
 export default function axiosJSON(method, url, data) {
   if (data) {
     data = Qs.stringify(data)

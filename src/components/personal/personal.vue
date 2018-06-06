@@ -10,7 +10,7 @@
     <content>
       <div class="info white-bg">
         <p>
-          <strong>{{user.name}}</strong>
+          <strong>{{user.user_name}}</strong>
           <strong>...</strong>
         </p>
         <p @click="_goToEditPersonalInfo">
