@@ -73,7 +73,8 @@
           this.user = JSON.parse(localStorage.getItem('loginUser'))
           this.isActive = this.user.sex
         }
-      }
+      },
+      _uploadAvatot(){}
     }
   }
 </script>
