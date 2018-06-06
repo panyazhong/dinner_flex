@@ -19,8 +19,8 @@
     },
     methods: {
       _checkIsLogin() {
-        if (!localStorage.UserInfo) {
-          alert('未登录')
+        if (!localStorage.loginUser) {
+          alert('请先登录')
           this.$router.push('/login')
         }
       }

@@ -93,9 +93,13 @@
     border-radius: 5px;
     margin-bottom: 10px;
   }
+  .panel>img{
+    width: 100%;
+  }
   .panel p{
     display: flex;
     width: 100%;
+    margin-top: 10px;
     flex-direction: row;
     margin-left: 10px;
     justify-content: space-between;
@@ -140,7 +144,7 @@
   }
   ul.step li{
     flex-direction: row;
-    padding: 10px 5px;
+    padding: 3px 3px 3px 10px;
     border-bottom: 1px solid #ededed;
   }
   ul.step li>div:nth-of-type(1){
@@ -150,8 +154,12 @@
   ul.step li>div:nth-of-type(1) span:nth-of-type(3){
     font-size: 13px;
   }
+  ul.step li>div:nth-of-type(2){
+    width: 50%;
+  }
   ul.step li>div:nth-of-type(2) img{
-    width: 100%;
+    width: 90%;
+    margin-top: 6px;
   }
   button{
     padding: 10px;

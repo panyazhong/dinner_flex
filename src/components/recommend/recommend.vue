@@ -19,7 +19,7 @@
       <ul class="flex yesterday-menu ">
         <li v-for="item in 5" @click="_goMenuDetail">
           <div class="flex white-bg">
-            <img src="../../assets/dish2.jpg" alt="">
+            <img src="../../assets/dish8.jpg" alt="">
             <span>鱼香肉丝</span>
           </div>
         </li>
@@ -78,7 +78,7 @@
     flex-direction: column;
   }
   .yesterday-menu li{
-    height: 50px;
+    height: 60px;
   }
   .yesterday-menu li div{
     flex-direction: row;
@@ -86,8 +86,11 @@
     align-items: center;
     padding: 0px 10px 0px 0px;
     margin-top: 10px;
+    border-radius: 10px;
   }
   .yesterday-menu li div img{
+    padding: 5px;
     height: 40px;
+    border-radius: 10px;
   }
 </style>
