@@ -10,7 +10,7 @@
       <ul class="flex yesterday-menu ">
         <li v-for="item in 5" @click="_goMenuDetail">
           <div class="flex white-bg">
-            <img src="../../assets/dish2.jpg" alt="">
+            <img src="../../assets/dish1.jpg" alt="">
             <span>鱼香肉丝</span>
           </div>
         </li>

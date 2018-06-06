@@ -148,6 +148,7 @@
   .panel img{
     width: 100%;
     margin-bottom: 10px;
+    border-radius: 5px 5px 0px 0px;
   }
   .panel p{
     display: flex;

@@ -17,8 +17,8 @@
       </div>
       <div class="flex info_form white-bg">
         <input type="text" placeholder="昵称" v-model="user.name">
-        <div class="flex">
-          <input type="date" placeholder="生日" v-model="user.birth">
+        <div class="flex sex">
+          <input type="date" class="birth" placeholder="生日" v-model="user.birth">
           <p class="font-md">
             <span @click="_choose" v-bind:class="{active:isActive == 1 ? true : false}" data-index="1">男</span>
             <span @click="_choose" v-bind:class="{active:isActive == 2 ? true : false}" data-index="2">女</span>
@@ -91,8 +91,11 @@
     padding-left: 10px;
     font: normal 13px/20px '微软雅黑';
   }
+  .info_form input.birth{
+    border-bottom: none
+  }
   textarea{
-    height: 40px;
+    height: 80px;
   }
   .info_form>div{
     justify-content: space-between;
@@ -116,5 +119,10 @@
     left: 0;
     width: 100%;
     height: 100%
+  }
+  .sex{
+    border-bottom: 1px solid rgb(250, 250, 250);
+    box-sizing: border-box;
+    padding-right: 10px;
   }
 </style>

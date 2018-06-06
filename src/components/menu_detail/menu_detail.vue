@@ -95,6 +95,7 @@
   }
   .panel>img{
     width: 100%;
+    border-radius: 5px 5px 0px 0px;
   }
   .panel p{
     display: flex;
