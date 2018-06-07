@@ -28,7 +28,7 @@
             <span>步骤{{item}}</span>
             <input type="file" @change="preview" multiple>
             <span class="up-tip normal-color">点击上传图片</span>
-            <img :src="image" alt="" ref="pre">
+            <img src="" alt="" ref="pre">
             <input type="text" placeholder="描述一下操作过程">
           </div>
         </div>
@@ -50,8 +50,7 @@
     data() {
       return {
         count: 3,
-        stepCount: 2,
-        image: ''
+        stepCount: 2
       }
     },
     mounted() {
@@ -85,14 +84,14 @@
         this.createImg(files, e)
       },
       createImg(files, e) {
+        let preImg = e.target.parentNode.getElementsByTagName('img')[0]
         if (typeof FileReader === 'undefined') {
           return
         }
         let reader = new FileReader()
-        let that = this
         reader.readAsDataURL(files[0])
-        reader.onload = function(e) {
-          that.image = e.target.result;
+        reader.onload = function(evt) {
+          preImg.src = evt.target.result
         }
       }
     }
