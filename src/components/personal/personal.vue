@@ -36,6 +36,9 @@
         <div>菜谱</div>
         <div>我的收藏</div>
       </div>
+      <div class="flex white-bg" @click="_gotoAddDish">
+        添加菜系
+      </div>
     </content>
   </div>
 </template>
@@ -63,13 +66,15 @@
       },
       _goToEditPersonalInfo() {
         this.$router.push('personal_info')
+      },
+      _gotoAddDish() {
+        this.$router.push('add_dish')
       }
     }
   }
 </script>
 
 <style scoped>
-
   content div.info{
     height: 80px;
     display: flex;

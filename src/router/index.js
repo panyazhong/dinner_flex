@@ -9,6 +9,7 @@ import menuDetail from '@/components/menu_detail/menu_detail'
 import MenuVote from '@/components/menu_vote/menu_vote'
 import Login from '@/components/login/login'
 import Register from '@/components/register/register'
+import addDish from '@/components/add_dish/add_dish'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/add_dish',
+      name: 'addDish',
+      component: addDish
     }
   ]
 })
