@@ -39,12 +39,17 @@
       <div class="flex white-bg" @click="_gotoAddDish">
         添加菜系
       </div>
+      <div>
+        <button @click="_addUser">新增用户</button>
+      </div>
     </content>
   </div>
 </template>
 
 <script>
   import {initHeight} from '@/common/js/initHeight'
+  import axios from 'axios'
+  import Qs from 'qs'
   export default {
     name: "personal",
     data() {
@@ -69,6 +74,21 @@
       },
       _gotoAddDish() {
         this.$router.push('add_dish')
+      },
+      _addUser() {
+        let data = {
+          user_name: 'trustUrzz',
+          age: 22
+        }
+        data = Qs.stringify(data)
+        axios.post('http://localhost:8090/addUser',data)
+          .then(resp => {
+            console.log(resp)
+
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
     }
   }
