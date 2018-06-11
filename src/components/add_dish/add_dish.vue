@@ -44,6 +44,7 @@
 
 <script>
   import * as api from '@/api/dish'
+  import * as formatDate from '@/common/js/formatDate'
   import Qs from 'qs'
   export default {
     name: "menu-detail",
@@ -52,7 +53,7 @@
         count: 1,
         stepCount: 1,
         dish: {
-          dish_author: 'dapan'
+          create_time: new Date()
         }
       }
     },
@@ -130,6 +131,8 @@
         }
         this.dish.dish_material = JSON.stringify(materialArr)
         this.dish.dish_step = JSON.stringify(stepArr)
+        this.dish.create_time = formatDate.formatDay(this.dish.create_time)
+        this.dish.dish_author = localStorage.loginUser.user_name
 
         api.addDish(this.dish)
           .then(resp => {

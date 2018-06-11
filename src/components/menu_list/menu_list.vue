@@ -5,12 +5,12 @@
     <div id="result"></div>
     <div class="menu-list">
       <div class="panel" v-for="item in menuList" :key="item.id" @click="_showMenuDetail(item)">
-        <img :src="item.pic" alt="">
+        <img :src="item.dish_pic" alt="">
         <p>
-          <span>{{item.name}}</span>
+          <span>{{item.dish_name}}</span>
           <span>
             <img src="../../assets/loginUser.png" alt="">
-            <strong>{{item.author}}</strong>
+            <strong>{{item.dish_author}}</strong>
           </span>
         </p>
       </div>
@@ -39,66 +39,66 @@
         searchdata: '',
         list: 10,
         menuList: [
-          {
-            id: 1,
-            pic: dish1,
-            name: '鱼香茄子',
-            author: 'dapan'
-          },
-          {
-            id: 2,
-            pic: dish2,
-            name: '牛腩豆角',
-            author: 'urzz'
-          },
-          {
-            id: 3,
-            pic: dish3,
-            name: '绝味三丁',
-            author: 'trusturzz'
-          },
-          {
-            id: 4,
-            pic: dish4,
-            name: '拍黄瓜',
-            author: 'Mr.liu'
-          },
-          {
-            id: 5,
-            pic: dish5,
-            name: '辣椒炒肉',
-            author: 'Mr.dapanpro'
-          },
-          {
-            id: 6,
-            pic: dish6,
-            name: '鸡胗',
-            author: 'flyer'
-          },
-          {
-            id: 7,
-            pic: dish7,
-            name: '水芹肉丝',
-            author: 'Mrs.fly'
-          },
-          {
-            id: 8,
-            pic: dish8,
-            name: '凉拌三丝',
-            author: 'dapanpro'
-          },
-          {
-            id: 9,
-            pic: dish9,
-            name: '美味猪耳',
-            author: 'Mr.panyazhong'
-          },
-          {
-            id: 10,
-            pic: dish10,
-            name: '青椒肉棒',
-            author: 'Mr.Pan'
-          }
+          // {
+          //   id: 1,
+          //   pic: dish1,
+          //   name: '鱼香茄子',
+          //   author: 'dapan'
+          // },
+          // {
+          //   id: 2,
+          //   pic: dish2,
+          //   name: '牛腩豆角',
+          //   author: 'urzz'
+          // },
+          // {
+          //   id: 3,
+          //   pic: dish3,
+          //   name: '绝味三丁',
+          //   author: 'trusturzz'
+          // },
+          // {
+          //   id: 4,
+          //   pic: dish4,
+          //   name: '拍黄瓜',
+          //   author: 'Mr.liu'
+          // },
+          // {
+          //   id: 5,
+          //   pic: dish5,
+          //   name: '辣椒炒肉',
+          //   author: 'Mr.dapanpro'
+          // },
+          // {
+          //   id: 6,
+          //   pic: dish6,
+          //   name: '鸡胗',
+          //   author: 'flyer'
+          // },
+          // {
+          //   id: 7,
+          //   pic: dish7,
+          //   name: '水芹肉丝',
+          //   author: 'Mrs.fly'
+          // },
+          // {
+          //   id: 8,
+          //   pic: dish8,
+          //   name: '凉拌三丝',
+          //   author: 'dapanpro'
+          // },
+          // {
+          //   id: 9,
+          //   pic: dish9,
+          //   name: '美味猪耳',
+          //   author: 'Mr.panyazhong'
+          // },
+          // {
+          //   id: 10,
+          //   pic: dish10,
+          //   name: '青椒肉棒',
+          //   author: 'Mr.Pan'
+          // }
         ]
       }
     },
@@ -124,6 +124,9 @@
         api.getDish()
           .then(resp => {
             console.log(resp)
+            if (resp.data.code == 200) {
+              this.menuList = resp.data.data
+            }
           })
           .catch(err => {
             console.log(err)
