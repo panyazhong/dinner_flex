@@ -123,7 +123,6 @@
       _getDish() {
         api.getDish()
           .then(resp => {
-            console.log(resp)
             if (resp.data.code == 200) {
               this.menuList = resp.data.data
             }

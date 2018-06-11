@@ -139,6 +139,7 @@
             console.log(resp)
             if (resp.data.code == 200) {
               alert('新增成功')
+
               this.$router.push('menu_list')
             }
           })

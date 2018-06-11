@@ -11,17 +11,16 @@
         <li v-for="item in voteList" class="flex">
           <div class="flex">
             <div class="flex">
-              <img :src="item.pic" alt="">
+              <img :src="item.dish_pic" alt="">
             </div>
             <div>
-              <span>{{item.name}}</span>
+              <span>{{item.dish_name}}</span>
             </div>
           </div>
-          <div>
-            <span class="normal-color">{{item.num}}</span>
-          </div>
-          <div>
-            <button @click="_vote" :data-index="item" class="normal-bg">投票</button>
+          <div class="flex">
+            <span class="normal-color">{{item.dish_vote_count}}</span>
+
+            <button @click="_vote(item.id)" :data-index="item" class="normal-bg" v-bind:class="{isVoted: item.isVoted == '1'}" v-bind:disabled="item.isVoted == '1'">投票</button>
           </div>
         </li>
       </ul>
@@ -40,67 +39,27 @@
   import dish8 from '@/assets/dish8.jpg'
   import dish9 from '@/assets/dish9.jpg'
   import dish10 from '@/assets/dish10.jpg'
+  import * as api from '@/api/vote'
   export default {
     name: "menu_vote",
     data() {
       return {
         count: null,
-        voteList: [
-          {
-            pic: dish1,
-            name: '鱼香茄子',
-            num: 1,
-          },
-          {
-            pic: dish2,
-            name: '牛腩豆角',
-            num: 3,
-          },
-          {
-            pic: dish3,
-            name: '绝味三丁',
-            num: 2,
-          },
-          {
-            pic: dish4,
-            name: '拍黄瓜',
-            num: 1,
-          },
-          {
-            pic: dish5,
-            name: '辣椒炒肉',
-            num: 1,
-          },
-          {
-            pic: dish6,
-            name: '鸡胗',
-            num: 4,
-          },
-          {
-            pic: dish7,
-            name: '水芹肉丝',
-            num: 3,
-          },
-          {
-            pic: dish8,
-            name: '凉拌三丝',
-            num: 0,
-          },
-          {
-            pic: dish9,
-            name: '美味猪耳',
-            num: 2,
-          },
-          {
-            pic: dish10,
-            name: '青椒肉棒',
-            num: 5,
-          }
-        ]
+        voteList: [],
+        user_id: '',
       }
     },
+    mounted() {
+      this.$nextTick(() => {
+        this.user_id = JSON.parse(localStorage.loginUser).user_id
+        this._getVotes()
+      })
+    },
     methods: {
-      _vote(e) {
+      _vote(id, e) {
+
+        e = e || window.event
+
         this.count++
         let date = new Date()
         let day = date.getDay()
@@ -110,11 +69,46 @@
             return
           }
         }
-        e = e || window.event
+
         e.target.setAttribute("disabled", true)
-        // e.target.style.background = "rgb(60, 140, 120)"
         e.target.style.background = "rgb(200, 150, 40)"
-      }
+
+        let data = {
+          id: id,
+          user_id: this.user_id
+        }
+
+        api.vote(data)
+          .then(resp => {
+            if (resp.data.code == 200) {
+              alert('投票成功')
+              e.target.parentNode.children[0].innerHTML = resp.data.data
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+      _getVotes() {
+        let data = {
+          user_id: this.user_id
+        }
+
+        api.getVotes(data)
+          .then(resp => {
+            if (resp.data.code == 200) {
+              this.voteList = resp.data.data
+            }
+            this.voteList.map((item) => {
+              if (item.isVoted == '1') {
+                this.count++
+              }
+            })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
     }
   }
 </script>
@@ -134,6 +128,9 @@
     flex-direction: row;
     align-items: center;
     text-align: center;
+  }
+  ul.menu li>div{
+    flex-direction: row;
   }
   ul.menu li>div>div:first-of-type{
     flex-direction: row;
@@ -155,5 +152,8 @@
     border-radius: 4px;
     border: none;
     outline: none;
+  }
+  button.isVoted {
+    background: rgb(200, 150, 40);
   }
 </style>
