@@ -30,6 +30,7 @@
   import dish8 from '@/assets/dish8.jpg'
   import dish9 from '@/assets/dish9.jpg'
   import dish10 from '@/assets/dish10.jpg'
+  import * as api from '@/api/dish'
   import {initHeight} from '@/common/js/initHeight'
 
   export default {
@@ -103,7 +104,7 @@
     },
     mounted() {
       this.$nextTick(() => {
-
+        this._getDish()
       })
     },
     watch: {
@@ -118,6 +119,15 @@
           path: '/menu_detail',
           query: {id: item}
         })
+      },
+      _getDish() {
+        api.getDish()
+          .then(resp => {
+            console.log(resp)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       _count() {
 

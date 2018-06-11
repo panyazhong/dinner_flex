@@ -51,7 +51,9 @@
       return {
         count: 1,
         stepCount: 1,
-        dish: {}
+        dish: {
+          dish_author: 'dapan'
+        }
       }
     },
     mounted() {
