@@ -16,15 +16,15 @@
         </p>
       </div>
       <div class="flex info_form white-bg">
-        <input type="text" placeholder="昵称" v-model="user.name">
+        <input type="text" placeholder="昵称" v-model="user.user_name">
         <div class="flex sex">
-          <input type="date" class="birth" placeholder="生日" v-model="user.birth">
+          <input type="date" class="birth" placeholder="生日" v-model="user.user_birth">
           <p class="font-md">
             <span @click="_choose" v-bind:class="{active:isActive == 1 ? true : false}" data-index="1">男</span>
             <span @click="_choose" v-bind:class="{active:isActive == 2 ? true : false}" data-index="2">女</span>
           </p>
         </div>
-        <textarea placeholder="个人简介" v-model="user.desc"></textarea>
+        <textarea placeholder="个人简介" v-model="user.user_desc"></textarea>
       </div>
     </content>
   </div>
@@ -32,6 +32,7 @@
 
 <script>
   import {initHeight} from '@/common/js/initHeight'
+  import * as api from '@/api/personal'
   export default {
     name: "personal_info",
     data() {
@@ -52,27 +53,42 @@
       _choose(e) {
         e = e || window.event
         this.isActive = Number(e.target.dataset.index)
-        this.user.sex = Number(e.target.dataset.index)
+        this.user.user_sex = Number(e.target.dataset.index)
       },
       _saveInfo() {
-        if (!this.user.name || !this.user.birth || !this.user.sex || !this.user.desc) {
+        if (!this.user.user_name || !this.user.user_birth || !this.user.user_sex || !this.user.user_desc) {
           alert('请填写完整信息！')
           return
         }
-        localStorage.loginUser = JSON.stringify(this.user)
-        if (true) {
-          alert('修改成功！')
-          this.$router.push('/personal')
-        }
+        api.modifyUser(this.user)
+          .then(resp => {
+            if (resp.data.code == 200) {
+              alert(resp.data.message)
+            } else {
+              alert(resp.data.message)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       _back() {
         this.$router.push('/personal')
       },
       _getInfo() {
-        if (localStorage.getItem('loginUser')) {
-          this.user = JSON.parse(localStorage.getItem('loginUser'))
-          this.isActive = this.user.sex
+        let data = {
+          user_id: JSON.parse(localStorage.loginUser).user_id
         }
+        api.getUserInfoById(data)
+          .then(resp => {
+            if (resp.data.code == 200) {
+              this.user = resp.data.data
+              this.isActive = this.user.user_sex
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       _uploadAvatot(){}
     }
