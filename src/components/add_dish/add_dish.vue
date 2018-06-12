@@ -61,7 +61,7 @@
     },
     methods: {
       _back() {
-        this.$router.push('/menu_list')
+        this.$router.push('/personal')
       },
       _operatematerial(flag1, flag2) {
         if (flag1 == 0 && flag2 == 1) {

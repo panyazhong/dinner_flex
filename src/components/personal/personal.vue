@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <span>+</span>
+      <span @click="_gotoAddDish">+</span>
       <span>我</span>
       <span>
         <img src="../../assets/set.png" alt="">
@@ -36,12 +36,9 @@
         <div>菜谱</div>
         <div>我的收藏</div>
       </div>
-      <div class="flex white-bg" @click="_gotoAddDish">
-        添加菜系
-      </div>
-      <div>
-        <button @click="_addUser">新增用户</button>
-      </div>
+      <!--<div>-->
+        <!--<button @click="_addUser">新增用户</button>-->
+      <!--</div>-->
     </content>
   </div>
 </template>

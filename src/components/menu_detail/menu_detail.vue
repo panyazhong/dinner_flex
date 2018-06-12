@@ -7,11 +7,11 @@
     </header>
     <div class="flex">
       <div class="panel">
-        <img :src="detailData.pic" alt="">
+        <img :src="detailData.dish_pic" alt="">
         <p>
           <span>
-            <strong>{{detailData.name}}</strong>
-            <strong>{{detailData.date}}</strong>
+            <strong>{{detailData.dish_name}}</strong>
+            <strong>{{detailData.create_time}}</strong>
           </span>
             <span>
             <img :src="detailData.avator" alt="">
@@ -20,22 +20,22 @@
         </p>
         <ul class="material">
           <p>用料：</p>
-          <li v-for="item in detailData.material" style="display: flex;justify-content: space-around">
-            <span>{{item.name}}</span>
+          <li v-for="item in detailData.dish_material" style="display: flex;justify-content: space-around">
+            <span>{{item.material_name}}</span>
             <span>:</span>
-            <span>{{item.num}}</span>
+            <span>{{item.material_num}}</span>
           </li>
         </ul>
         <ul class="step">
           <p>步骤：</p>
-          <li class="flex" v-for="item in detailData.step">
+          <li class="flex" v-for="(item, index) in detailData.dish_step">
             <div>
-              <span>{{item.name}}</span>
+              <span>步骤{{index + 1}}</span>
               <span>:</span>
-              <span style="text-align: left">{{item.num}}</span>
+              <span style="text-align: left">{{item.step_desc}}</span>
             </div>
             <div>
-              <img :src="item.stepPic" alt="">
+              <img :src="item.step_pic" alt="">
             </div>
           </li>
         </ul>
@@ -62,10 +62,14 @@
     },
     methods: {
       _getMenuDetail(id) {
-        api.getMenuDetail()
+        let data = {
+          id: this.$route.query.id
+        }
+        api.getMenuDetail(data)
           .then(resp => {
+            console.log(resp)
             if (resp.data.code == 200) {
-              this.detailData = resp.data.data
+              this.detailData = resp.data.data[0]
             }
           })
           .catch(err => {
@@ -136,11 +140,13 @@
   }
   ul.material>p, ul.step>p{
     font: bold 16px/20px '微软雅黑';
+    align-self: flex-start;
   }
   ul.material li span{
     width: 100%;
   }
   ul.step{
+    width: 100%;
     margin-top: 20px;
   }
   ul.step li{
