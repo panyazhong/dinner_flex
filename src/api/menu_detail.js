@@ -6,3 +6,9 @@ export function getMenuDetail(data) {
   let method = 'POST'
   return axiosJSON(method, url, data)
 }
+
+export function addToVote(data) {
+  let url = URL + 'addToVote'
+  let method = 'POST'
+  return axiosJSON(method, url, data)
+}

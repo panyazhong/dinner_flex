@@ -39,7 +39,7 @@
             </div>
           </li>
         </ul>
-        <button class="normal-bg">加入菜单</button>
+        <button class="normal-bg" @click="_addToVote">加入菜单</button>
       </div>
     </div>
   </div>
@@ -61,13 +61,12 @@
       })
     },
     methods: {
-      _getMenuDetail(id) {
+      _getMenuDetail() {
         let data = {
           id: this.$route.query.id
         }
         api.getMenuDetail(data)
           .then(resp => {
-            console.log(resp)
             if (resp.data.code == 200) {
               this.detailData = resp.data.data[0]
             }
@@ -78,6 +77,22 @@
       },
       _back() {
         this.$router.push('/menu_list')
+      },
+      _addToVote() {
+        this.detailData.user_id = JSON.parse(localStorage.loginUser).user_id
+        this.detailData.user_name = JSON.parse(localStorage.loginUser).user_name
+
+        api.addToVote(this.detailData)
+          .then(resp => {
+            if (resp.data.code == 200) {
+              alert(resp.data.message)
+            } else {
+              alert(resp.data.message)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
     }
   }
