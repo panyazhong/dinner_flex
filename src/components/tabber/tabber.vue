@@ -43,7 +43,12 @@
     },
     mounted() {
       this.$nextTick(() => {
-        this.tabber_progress = localStorage.tabber_progress
+        if (localStorage.tabber_progress) {
+          this.tabber_progress = localStorage.tabber_progress
+        } else {
+          this.tabber_progress = 'recommend'
+        }
+        this.$router.push(this.tabber_progress)
       })
     },
     methods: {
