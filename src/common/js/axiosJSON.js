@@ -3,8 +3,10 @@ import Qs from 'qs'
 
 axios.default.withCredentials = true
 
-export default function axiosJSON(method, url, data) {
-  if (data) {
+export default function axiosJSON(method, url, data, flag) {
+  if (data && flag) {
+    data = data
+  } else {
     data = Qs.stringify(data)
   }
 

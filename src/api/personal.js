@@ -10,5 +10,5 @@ export function getUserInfoById(data) {
 export function modifyUser(data) {
   let url = URL + 'modifyUser'
   let method = 'POST'
-  return axiosJSON(method, url, data)
+  return axiosJSON(method, url, data, 1)
 }

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Recommend from '@/components/recommend/recommend'
 import MenuList from '@/components/menu_list/menu_list'
 import Personal from '@/components/personal/personal'
@@ -15,11 +14,6 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/helloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
     {
       path: '/recommend',
       name: 'Recommend',

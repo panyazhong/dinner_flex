@@ -8,11 +8,16 @@
     <content>
       <div class="avator">
         <p>
-          <img src="../../assets/default_avator.png" alt="">
+          <img :src="user.user_avatar" alt="">
         </p>
         <p>
           <label for="">上传头像</label>
-          <input type="file" name="" id="" class="avator-input">
+          <input type="file" name="" id="file" @change="preview" class="avator-input">
+          <!--<form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">-->
+            <!--<input type="file" name="content" />-->
+            <!--<br />-->
+            <!--<input type="submit" value="上传文件" />-->
+          <!--</form>-->
         </p>
       </div>
       <div class="flex info_form white-bg">
@@ -33,13 +38,17 @@
 <script>
   import {initHeight} from '@/common/js/initHeight'
   import * as api from '@/api/personal'
+  import avatar from '@/assets/default_avator.png'
+  import axios from 'axios'
   export default {
     name: "personal_info",
     data() {
       return {
         isActive: 1,
+        default_avatar: avatar,
         user: {
-          sex: 1
+          sex: 1,
+          user_avatar: avatar
         }
       }
     },
@@ -56,11 +65,22 @@
         this.user.user_sex = Number(e.target.dataset.index)
       },
       _saveInfo() {
+
         if (!this.user.user_name || !this.user.user_birth || !this.user.user_sex || !this.user.user_desc) {
           alert('请填写完整信息！')
           return
         }
-        api.modifyUser(this.user)
+
+        let fd = new FormData()
+        let file = document.getElementById('file').files[0]
+        fd.append('file', file)
+        fd.append('user_id', this.user.user_id)
+        fd.append('user_name', this.user.user_name)
+        fd.append('user_desc', this.user.user_desc)
+        fd.append('user_sex', this.user.user_sex)
+        fd.append('user_birth', this.user.user_birth)
+
+        api.modifyUser(fd)
           .then(resp => {
             if (resp.data.code == 200) {
               alert(resp.data.message)
@@ -83,6 +103,9 @@
           .then(resp => {
             if (resp.data.code == 200) {
               this.user = resp.data.data
+              if (!this.user.user_avatar) {
+                this.user.user_avatar = this.default_avatar
+              }
               this.isActive = this.user.user_sex
             }
           })
@@ -90,7 +113,28 @@
             console.log(err)
           })
       },
-      _uploadAvatot(){}
+      preview(e) {
+        console.log(e)
+        let files = e.target.files || e.dataTransfer.files
+        if (!files.length) {
+          return
+        }
+        this.createImg(files, e)
+      },
+      createImg(files, e) {
+        let preImg = e.target.parentNode.parentNode.children[0].children[0]
+        if (typeof FileReader === 'undefined') {
+          return
+        }
+        let reader = new FileReader()
+        reader.readAsDataURL(files[0])
+        reader.onload = function(evt) {
+          preImg.src = evt.target.result
+        }
+      },
+      _uploadAvatar() {
+
+      }
     }
   }
 </script>
@@ -126,6 +170,9 @@
   }
   .avator{
     position: relative
+  }
+  .avator img{
+    width: 100px;
   }
   .avator-input{
     opacity: 0;
