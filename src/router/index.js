@@ -9,6 +9,7 @@ import MenuVote from '@/components/menu_vote/menu_vote'
 import Login from '@/components/login/login'
 import Register from '@/components/register/register'
 import addDish from '@/components/add_dish/add_dish'
+import Chat from '@/components/chat/chat'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/add_dish',
       name: 'addDish',
       component: addDish
+    },
+    {
+      path: '/chat',
+      name: 'Chat',
+      component: Chat
     }
   ]
 })

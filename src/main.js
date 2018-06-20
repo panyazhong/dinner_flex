@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import '@/common/css/common.css'
+import VueSocketio from 'vue-socket.io'
 
 Vue.config.productionTip = false
+Vue.use(VueSocketio, 'http://localhost:3000')
 
 /* eslint-disable no-new */
 new Vue({

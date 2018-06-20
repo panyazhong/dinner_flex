@@ -36,9 +36,9 @@
         <div>菜谱</div>
         <div>我的收藏</div>
       </div>
-      <!--<div>-->
-        <!--<button @click="_addUser">新增用户</button>-->
-      <!--</div>-->
+      <div>
+        <button @click="_chat">chat</button>
+      </div>
     </content>
   </div>
 </template>
@@ -72,20 +72,8 @@
       _gotoAddDish() {
         this.$router.push('add_dish')
       },
-      _addUser() {
-        let data = {
-          user_name: 'trustUrzz',
-          age: 22
-        }
-        data = Qs.stringify(data)
-        axios.post('http://localhost:8090/addUser',data)
-          .then(resp => {
-            console.log(resp)
-
-          })
-          .catch(err => {
-            console.log(err)
-          })
+      _chat() {
+        this.$router.push('chat')
       }
     }
   }
