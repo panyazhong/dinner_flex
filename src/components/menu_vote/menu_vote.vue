@@ -79,13 +79,12 @@
           id: id,
           user_id: this.user_id
         }
-
         api.vote(data)
           .then(resp => {
             if (resp.data.code == code.ERR_OK) {
               alert('投票成功')
               e.target.parentNode.children[0].innerHTML = resp.data.data
-            } else if (resp.data.code == code.LOGIN_ERR){
+            } else if (resp.data.code == code.LOGIN_ERR) {
               alert(resp.data.message)
               this.$router.push('login')
             } else {
@@ -105,6 +104,9 @@
           .then(resp => {
             if (resp.data.code == 200) {
               this.voteList = resp.data.data
+            } else if (resp.data.code == code.LOGIN_ERR) {
+              alert(resp.data.message)
+              this.$router.push('login')
             }
             this.voteList.map((item) => {
               if (item.isVoted == '1') {

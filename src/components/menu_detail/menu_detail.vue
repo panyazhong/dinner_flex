@@ -93,6 +93,9 @@
           .then(resp => {
             if (resp.data.code == 200) {
               alert(resp.data.message)
+            } else if (resp.data.code == code.LOGIN_ERR) {
+              alert(resp.data.message)
+              this.$router.push('login')
             } else {
               alert(resp.data.message)
             }
