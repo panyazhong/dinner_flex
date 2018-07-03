@@ -47,6 +47,7 @@
 
 <script>
   import * as api from '@/api/menu_detail'
+  import * as code from '@/common/js/config'
   import Qs from 'qs'
   export default {
     name: "menu-detail",
@@ -58,6 +59,7 @@
     mounted() {
       this.$nextTick(() => {
         this._getMenuDetail()
+        this.$parent.$data.routePath = this.$route.path
       })
     },
     methods: {
@@ -67,8 +69,13 @@
         }
         api.getMenuDetail(data)
           .then(resp => {
-            if (resp.data.code == 200) {
+            if (resp.data.code == code.ERR_OK) {
+              let date = new Date(resp.data.data[0].create_time)
+              resp.data.data[0].create_time = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())
               this.detailData = resp.data.data[0]
+            } else if (resp.data.code == code.LOGIN_ERR){
+              alert(resp.data.message)
+              this.$router.push('login')
             }
           })
           .catch(err => {
@@ -76,7 +83,7 @@
           })
       },
       _back() {
-        this.$router.push('/menu_list')
+        this.$router.push(localStorage.dishDetailFrom)
       },
       _addToVote() {
         this.detailData.user_id = JSON.parse(localStorage.loginUser).user_id

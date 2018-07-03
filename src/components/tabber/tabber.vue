@@ -1,27 +1,27 @@
 <template>
   <div class="flex" ref="tabber">
-    <div v-bind:class="{is_active : tabber_progress == 'recommend' ? true : false}" @click="_tabber">
+    <div v-bind:class="{is_active : tabber_progress == '/recommend' ? true : false}" @click="_tabber">
       <router-link to="/recommend">
         <img src="../../assets/recommend.png" alt="">
         <!--<img src="../../assets/recommend (1).png" alt="">-->
         推荐
       </router-link>
     </div>
-    <div v-bind:class="{is_active : tabber_progress == 'menu_list' ? true : false}" @click="_tabber">
+    <div v-bind:class="{is_active : tabber_progress == '/menu_list' ? true : false}" @click="_tabber">
       <router-link to="/menu_list">
         <img src="../../assets/list.png" alt="">
         <!--<img src="../../assets/list (1).png" alt="">-->
         菜谱
       </router-link>
     </div>
-    <div v-bind:class="{is_active : tabber_progress == 'menu_vote' ? true : false}" @click="_tabber">
+    <div v-bind:class="{is_active : tabber_progress == '/menu_vote' ? true : false}" @click="_tabber">
       <router-link to="/menu_vote">
         <img src="../../assets/make.png" alt="">
         <!--<img src="../../assets/make (1).png" alt="">-->
         菜单投票
       </router-link>
     </div>
-    <div v-bind:class="{is_active : tabber_progress == 'personal' ? true : false}" @click="_tabber">
+    <div v-bind:class="{is_active : tabber_progress == '/personal' ? true : false}" @click="_tabber">
       <router-link to="/personal">
         <img src="../../assets/personal.png" alt="">
         <!--<img src="../../assets/personal (1).png" alt="">-->
@@ -43,19 +43,26 @@
     },
     mounted() {
       this.$nextTick(() => {
-        if (localStorage.tabber_progress) {
-          this.tabber_progress = localStorage.tabber_progress
+        if (this.$route.query) {
+          this.tabber_progress = this.$route.path
+          this.$router.push({
+            path: this.tabber_progress,
+            query: {
+              id: this.$route.query.id
+            }
+          })
         } else {
-          this.tabber_progress = 'recommend'
+          this.tabber_progress = this.$route.path
+          this.$router.push({
+            name: this.tabber_progress
+          })
         }
-        this.$router.push(this.tabber_progress)
       })
     },
     methods: {
       _tabber(e) {
         e = e || window.event
-        this.tabber_progress = e.target.hash.split('/')[1]
-        localStorage.tabber_progress = this.tabber_progress
+        this.tabber_progress = e.target.hash.split('#')[1]
       }
     }
   }

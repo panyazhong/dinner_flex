@@ -15,6 +15,12 @@
         </p>
       </div>
     </div>
+    <div v-show="loading">
+      正在加载，请稍等...
+    </div>
+    <div v-show="hasNum">
+      没有数据了...
+    </div>
   </div>
 </template>
 
@@ -31,6 +37,7 @@
   import dish9 from '@/assets/dish9.jpg'
   import dish10 from '@/assets/dish10.jpg'
   import * as api from '@/api/dish'
+  import * as code from '@/common/js/config'
   import {initHeight} from '@/common/js/initHeight'
 
   export default {
@@ -38,12 +45,32 @@
       return {
         searchdata: '',
         list: 10,
-        menuList: []
+        menuList: [],
+        pageSize: 10,
+        page: 1,
+        hasNum: false,
+        loading: false,
+        sw: false,
       }
     },
     mounted() {
       this.$nextTick(() => {
+        this.$parent.$data.routePath = this.$route.path
         this._getDish()
+
+        this.sw = true
+        window.addEventListener('scroll', () => {
+          if(document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+
+            if (this.sw == true) {
+              this.sw = false
+              this.loading = true
+              this.page += 1
+              this._getDish()
+            }
+
+          }
+        })
       })
     },
     watch: {
@@ -54,16 +81,31 @@
         this.list = val
       },
       _showMenuDetail(item) {
+        localStorage.dishDetailFrom = 'menu_list'
         this.$router.push({
           path: '/menu_detail',
           query: {id: item.id}
         })
       },
       _getDish() {
-        api.getDish()
+        var data = {
+          page: this.page,
+          pageSize: this.pageSize
+        }
+        api.getDish(data)
           .then(resp => {
-            if (resp.data.code == 200) {
-              this.menuList = resp.data.data
+            if (resp.data.code == code.ERR_OK) {
+              this.loading = false
+              if (resp.data.data.length) {
+                for (let i = 0; i < resp.data.data.length; i++) {
+                  this.menuList.push(resp.data.data[i])
+                }
+              }
+              this.hasNum = resp.data.data.length == 0 ? true : false
+              this.sw = true
+            } else if (resp.data.code == code.LOGIN_ERR){
+              alert(resp.data.message)
+              this.$router.push('login')
             }
           })
           .catch(err => {
@@ -81,6 +123,9 @@
 </script>
 
 <style scoped>
+  .menu{
+    flex-direction: column;
+  }
   .menu-list{
     width: 100%;
     display: flex;

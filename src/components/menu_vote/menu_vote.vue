@@ -40,6 +40,7 @@
   import dish9 from '@/assets/dish9.jpg'
   import dish10 from '@/assets/dish10.jpg'
   import * as api from '@/api/vote'
+  import * as code from '@/common/js/config'
   export default {
     name: "menu_vote",
     data() {
@@ -51,6 +52,7 @@
     },
     mounted() {
       this.$nextTick(() => {
+        this.$parent.$data.routePath = this.$route.path
         this.user_id = JSON.parse(localStorage.loginUser).user_id
         this._getVotes()
       })
@@ -80,9 +82,14 @@
 
         api.vote(data)
           .then(resp => {
-            if (resp.data.code == 200) {
+            if (resp.data.code == code.ERR_OK) {
               alert('投票成功')
               e.target.parentNode.children[0].innerHTML = resp.data.data
+            } else if (resp.data.code == code.LOGIN_ERR){
+              alert(resp.data.message)
+              this.$router.push('login')
+            } else {
+              alert(resp.data.message)
             }
           })
           .catch(err => {

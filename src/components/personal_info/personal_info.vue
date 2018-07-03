@@ -38,6 +38,7 @@
 <script>
   import {initHeight} from '@/common/js/initHeight'
   import * as api from '@/api/personal'
+  import * as code from '@/common/js/config'
   import avatar from '@/assets/default_avator.png'
   import axios from 'axios'
   export default {
@@ -54,7 +55,7 @@
     },
     mounted() {
       this.$nextTick(() => {
-        // initHeight()
+        this.$parent.$data.routePath = this.$route.path
         this._getInfo()
       })
     },
@@ -82,8 +83,11 @@
 
         api.modifyUser(fd)
           .then(resp => {
-            if (resp.data.code == 200) {
+            if (resp.data.code == code.ERR_OK) {
               alert(resp.data.message)
+            } else if (resp.data.code == code.LOGIN_ERR){
+              alert(resp.data.message)
+              this.$router.push('login')
             } else {
               alert(resp.data.message)
             }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <tabber></tabber>
+    <tabber v-show="routePath == '/recommend' || routePath == '/menu_vote' || routePath == '/menu_list' || routePath == '/personal'"></tabber>
     <router-view/>
   </div>
 </template>
@@ -11,10 +11,15 @@
 
   export default {
     name: 'App',
+    data() {
+      return {
+        routePath: ''
+      }
+    },
     mounted() {
       this.$nextTick(() => {
-        this._checkIsLogin()
         this._pageProgress()
+        this.routePath = this.$route.path
       })
       window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -29,12 +34,6 @@
       })
     },
     methods: {
-      _checkIsLogin() {
-        if (!localStorage.loginUser) {
-          alert('请先登录')
-          this.$router.push('/login')
-        }
-      },
       _pageProgress() {
         let scrollTop = localStorage.page_progress
         if (window.pageYOffset) {

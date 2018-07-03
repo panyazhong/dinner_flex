@@ -46,6 +46,7 @@
   import * as api from '@/api/dish'
   import * as formatDate from '@/common/js/formatDate'
   import Qs from 'qs'
+  import * as code from '@/common/js/config'
   export default {
     name: "menu-detail",
     data() {
@@ -58,6 +59,9 @@
       }
     },
     mounted() {
+      this.$nextTick(() => {
+        this.$parent.$data.routePath = this.$route.path
+      })
     },
     methods: {
       _back() {
@@ -137,10 +141,14 @@
         api.addDish(this.dish)
           .then(resp => {
             console.log(resp)
-            if (resp.data.code == 200) {
+            if (resp.data.code == code.ERR_OK) {
               alert('新增成功')
-
               this.$router.push('menu_list')
+            } else if (resp.data.code == code.LOGIN_ERR) {
+              alert(resp.data.message)
+              this.$router.push('login')
+            } else {
+              alert('新增失败')
             }
           })
           .catch(err => {

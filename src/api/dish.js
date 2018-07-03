@@ -9,6 +9,6 @@ export function addDish(data) {
 
 export function getDish(data) {
   let url = URL + 'getDish'
-  let method = 'GET'
+  let method = 'POST'
   return axiosJSON(method, url ,data)
 }

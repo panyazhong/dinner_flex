@@ -36,9 +36,9 @@
         <div>菜谱</div>
         <div>我的收藏</div>
       </div>
-      <div>
-        <button @click="_chat">chat</button>
-      </div>
+      <!--<div>-->
+        <!--<button @click="_chat">chat</button>-->
+      <!--</div>-->
     </content>
   </div>
 </template>
@@ -56,7 +56,7 @@
     },
     mounted() {
       this.$nextTick(() => {
-        // initHeight()
+        this.$parent.$data.routePath = this.$route.path
         this._getUser()
       })
     },

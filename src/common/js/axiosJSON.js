@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Qs from 'qs'
 
-axios.default.withCredentials = true
+axios.defaults.withCredentials = true
 
 export default function axiosJSON(method, url, data, flag) {
   if (data && flag) {

@@ -20,6 +20,11 @@
         user: {}
       }
     },
+    mounted() {
+      this.$nextTick(() => {
+        this.$parent.$data.routePath = this.$route.path
+      })
+    },
     methods: {
       _login() {
         if (!this.user.user_name || !this.user.password) {
