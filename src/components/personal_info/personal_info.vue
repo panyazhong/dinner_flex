@@ -111,6 +111,11 @@
                 this.user.user_avatar = this.default_avatar
               }
               this.isActive = this.user.user_sex
+            } else if (resp.data.code == code.LOGIN_ERR){
+              alert(resp.data.message)
+              this.$router.push('login')
+            } else {
+              alert(resp.data.message)
             }
           })
           .catch(err => {
