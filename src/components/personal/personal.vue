@@ -34,7 +34,7 @@
       </div>
       <div class="flex person_nav font-sm white-bg">
         <div>菜谱</div>
-        <div>我的收藏</div>
+        <div @click="_getCollect">我的收藏</div>
       </div>
       <!--<div>-->
         <!--<button @click="_chat">chat</button>-->
@@ -74,6 +74,14 @@
       },
       _chat() {
         this.$router.push('chat')
+      },
+      _getCollect() {
+        this.$router.push({
+          name: 'collectDish',
+          query: {
+            user_id: this.user.user_id
+          }
+        })
       }
     }
   }
