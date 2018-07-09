@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <tabber v-show="routePath == '/recommend' || routePath == '/menu_vote' || routePath == '/menu_list' || routePath == '/personal'"></tabber>
+    <tabber v-bind:routePath="routePath" v-show="routePath == '/recommend' || routePath == '/menu_vote' || routePath == '/menu_list' || routePath == '/personal'"></tabber>
     <router-view/>
   </div>
 </template>
@@ -13,7 +13,7 @@
     name: 'App',
     data() {
       return {
-        routePath: ''
+        routePath: '',
       }
     },
     mounted() {

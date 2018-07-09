@@ -83,17 +83,17 @@
         this.list = val
       },
       _showMenuDetail(item) {
-        localStorage.dishDetailFrom = 'personal'
+        localStorage.dishDetailFrom = 'collect_dish'
         this.$router.push({
           path: '/menu_detail',
-          query: {id: item.id}
+          query: {id: item.dish_id}
         })
       },
       _getDish() {
         var data = {
           page: this.page,
           pageSize: this.pageSize,
-          user_id: this.$route.query.user_id
+          user_id: this.$route.query.user_id || JSON.parse(localStorage.loginUser).user_id
         }
         api.getCollect(data)
           .then(resp => {

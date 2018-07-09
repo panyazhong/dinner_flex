@@ -36,6 +36,9 @@
 
   export default {
     name: "tabber",
+    props: [
+      "routePath"
+    ],
     data() {
       return {
         tabber_progress: ''
@@ -63,6 +66,11 @@
       _tabber(e) {
         e = e || window.event
         this.tabber_progress = e.target.hash.split('#')[1]
+      }
+    },
+    watch: {
+      routePath: function () {
+        this.tabber_progress = this.routePath
       }
     }
   }

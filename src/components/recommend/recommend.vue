@@ -9,29 +9,29 @@
       <div class="top-content">
         <img src="../../assets/dish1.jpg" alt="">
         <div class="types">
-          <div>
+          <div @click="_showDishByType(1, '小炒')">
             <img src="../../assets/chaocai.png" alt="">
             热炒
           </div>
-          <div>
+          <div @click="_showDishByType(2, '凉拌')">
             <img src="../../assets/liangcai.png" alt="">
             凉拌
           </div>
-          <div>
+          <div @click="_showDishByType(3, '汤羹')">
             <img src="../../assets/soul.png" alt="">
             汤羹
           </div>
         </div>
         <div class="types">
-          <div>
+          <div @click="_showDishByType(4, '主食')">
             <img src="../../assets/noodle.png" alt="">
             主食
           </div>
-          <div>
+          <div @click="_showDishByType(5, '小吃')">
             <img src="../../assets/xiaochi.png" alt="">
             小吃
           </div>
-          <div>
+          <div @click="_showDishByType(6, '甜点')">
             <img src="../../assets/sweet.png" alt="">
             甜点
           </div>
@@ -128,6 +128,15 @@
           query: {id: item.id}
         })
       },
+      _showDishByType(type_id, type_name) {
+        this.$router.push({
+          path: '/type_dish',
+          query: {
+            type_id: type_id,
+            type_name: type_name
+          }
+        })
+      }
     },
     components: {
       Search

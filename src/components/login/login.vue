@@ -37,6 +37,7 @@
             if (resp.data.code == ERR_OK) {
               localStorage.loginUser = JSON.stringify(resp.data.data)
               this.$router.push('/recommend')
+              this.$parent.$emit('recommend')
             } else {
               alert(resp.data.message)
             }

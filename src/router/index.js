@@ -11,6 +11,7 @@ import Register from '@/components/register/register'
 import addDish from '@/components/add_dish/add_dish'
 import collectDish from '@/components/collect_dish/collect_dish'
 import Chat from '@/components/chat/chat'
+import typeDish from '@/components/type_dish/type_dish'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ export default new Router({
       path: '/collect_dish',
       name: 'collectDish',
       component: collectDish
+    },
+    {
+      path: '/type_dish',
+      name: 'typeDish',
+      component: typeDish
     }
   ]
 })
