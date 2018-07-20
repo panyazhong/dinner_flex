@@ -1,48 +1,113 @@
 <template>
   <div>
     <header>
-      <span><</span>
+      <span @click="_back"><</span>
       <span>{{title}}</span>
       <span></span>
     </header>
     <content>
       <ul>
-        <li v-for="item in 5">
+        <li v-for="item in dish" @click="_showDishDetail(item.id)">
           <div>
-            <p>鱼香肉丝</p>
-            <p>{{desc}}</p>
+            <p>{{item.dish_name}}</p>
+            <p>{{item.dish_desc}}</p>
             <p>
               <span>
-                <img src="../../assets/default_avator.png" alt="">
+                <img :src="item.dish_pic" alt="">
               </span>
-              <span>dapan</span>
+              <span>{{item.dish_author}}</span>
             </p>
           </div>
           <div>
-            <img src="../../assets/dish2.jpg" alt="">
+            <img :src="item.dish_pic" alt="">
           </div>
         </li>
       </ul>
+      <div v-show="loading">
+        正在加载，请稍等...
+      </div>
+      <div v-show="hasNum">
+        没有数据了...
+      </div>
     </content>
   </div>
 </template>
 
 <script>
   import * as api from '@/api/type_dish'
+  import * as code from "@/common/js/config"
   export default {
     name: "type_dish",
     data() {
       return {
         title: '',
-        desc: ''
+        desc: '',
+        page: 1,
+        pageSize: 10000,
+        dish: [],
+        hasNum: false,
+        loading: false,
       }
     },
     mounted() {
       this.$nextTick(() => {
         this.$parent.$data.routePath = this.$route.path
         this.title = this.$route.query.type_name
-        this.desc = this.desc.slice(0, 15) + '...'
+        this._getDishByType()
+        this.sw = true
+        window.addEventListener('scroll', () => {
+          if(document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+            if (this.sw == true) {
+              this.sw = false
+              this.loading = true
+              this.page += 1
+              this._getDishByType()
+            }
+          }
+        })
       })
+    },
+    methods: {
+      _getDishByType() {
+        let data = {
+          type_id: this.$route.query.type_id,
+          page: this.page,
+          pageSize: this.pageSize
+        }
+        api.getDishByType(data)
+          .then(resp => {
+            if (resp.data.code == code.ERR_OK) {
+              this.loading = false
+              this.hasNum = resp.data.data.length == 0 ? true : false
+              for (let i = 0; i < resp.data.data.length; i++) {
+                if (resp.data.data[i].dish_desc.length > 8) {
+                  resp.data.data[i].dish_desc = resp.data.data[i].dish_desc.substring(0, 8) + '...'
+                }
+                this.dish.push(resp.data.data[i])
+              }
+              this.sw = true
+            } else if (resp.data.code == code.LOGIN_ERR) {
+              alert(resp.data.message)
+              this.$router.push('login')
+            } else {
+              alert(resp.data.message)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+      _back() {
+        this.$router.push('/recommend')
+      },
+      _showDishDetail(dish_id) {
+        this.$router.push({
+          name: 'menuDetail',
+          query: {
+            id: dish_id
+          }
+        })
+      }
     }
   }
 </script>
@@ -83,9 +148,12 @@
     width: 30px;
     height: 30px;
     margin-right: 5px;
+    border-radius: 50%;
+    overflow: hidden;
   }
   content li>div:first-of-type p:nth-of-type(3) span:first-of-type img{
     width: 100%;
+    height: 30px;
   }
   content li>div:nth-of-type(2){
     width: 150px;

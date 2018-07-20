@@ -12,3 +12,9 @@ export function getDish(data) {
   let method = 'POST'
   return axiosJSON(method, url ,data)
 }
+
+export function getDishType() {
+  let url = URL + 'getDishType'
+  let method = 'GET'
+  return axiosJSON(method, url)
+}

@@ -11,6 +11,23 @@
           <input type="text" placeholder="写下你的菜名" v-model="dish.dish_name">
           <textarea type="text" placeholder="写下这道菜的故事" v-model="dish.dish_desc"></textarea>
         </div>
+        <div class="name-desc flex">
+          <p class="title">菜单类型</p>
+          <select name="" id="" v-model="dish.type_id">
+            <option :value="item.type_id" v-for="item in typeList">{{item.type_name}}</option>
+          </select>
+        </div>
+        <div class="name-desc flex">
+          <p class="title">制作难度系数</p>
+          <div class="star-pos">
+            <!--v-bind:class="{on: dish_difficulty >= 1-->
+            <div class="stars" v-bind:class="{on: dish.dish_difficulty >= 1}" @click="_chooseDiff" data-diff="1"></div>
+            <div class="stars" v-bind:class="{on: dish.dish_difficulty >= 2}" @click="_chooseDiff" data-diff="2"></div>
+            <div class="stars" v-bind:class="{on: dish.dish_difficulty >= 3}" @click="_chooseDiff" data-diff="3"></div>
+            <div class="stars" v-bind:class="{on: dish.dish_difficulty >= 4}" @click="_chooseDiff" data-diff="4"></div>
+            <div class="stars" v-bind:class="{on: dish.dish_difficulty >= 5}" @click="_chooseDiff" data-diff="5"></div>
+          </div>
+        </div>
         <p class="title">原材料</p>
         <div v-for="item in count">
           <div class="material" ref="material">
@@ -54,13 +71,16 @@
         count: 1,
         stepCount: 1,
         dish: {
-          create_time: new Date()
-        }
+          create_time: new Date(),
+          dish_difficulty: 1
+        },
+        typeList: []
       }
     },
     mounted() {
       this.$nextTick(() => {
         this.$parent.$data.routePath = this.$route.path
+        this._getDishType()
       })
     },
     methods: {
@@ -136,11 +156,11 @@
         this.dish.dish_material = JSON.stringify(materialArr)
         this.dish.dish_step = JSON.stringify(stepArr)
         this.dish.create_time = formatDate.formatDay(this.dish.create_time)
-        this.dish.dish_author = localStorage.loginUser.user_name
+        this.dish.dish_author = JSON.parse(localStorage.loginUser).user_name
+        this.dish.author_id = JSON.parse(localStorage.loginUser).user_id
 
         api.addDish(this.dish)
           .then(resp => {
-            console.log(resp)
             if (resp.data.code == code.ERR_OK) {
               alert('新增成功')
               this.$router.push('menu_list')
@@ -154,6 +174,25 @@
           .catch(err => {
             console.log(err)
           })
+      },
+      _getDishType() {
+        api.getDishType()
+          .then(resp => {
+            if (resp.data.code == code.ERR_OK) {
+              this.typeList = resp.data.data
+            } else if (resp.data.code == code.LOGIN_ERR) {
+              alert(resp.data.message)
+              this.$router.push('login')
+            } else {
+              alert('查询失败')
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+      _chooseDiff(e) {
+        this.dish.dish_difficulty = e.target.dataset.diff
       }
     }
   }
@@ -255,10 +294,36 @@
     height: 30px;
     margin-top: 20px;
   }
+  select{
+    height: 30px;
+    border: 1px solid #efefef;
+    padding-left: 10px;
+  }
   button {
     border: none;
     height: 40px;
     letter-spacing: 10px;
     outline: none;
+  }
+  .star-pos{
+    height: 30px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .stars{
+    background:url("../../assets/star_null.png");
+    width: 14px;
+    height: 14px;
+    background-size: contain;
+    transition: 600ms;
+  }
+  .on{
+    background:url("../../assets/star_full.png");
+    width: 14px;
+    height: 14px;
+    background-size: contain;
   }
 </style>
