@@ -91,14 +91,14 @@
         if (flag1 == 0 && flag2 == 1) {
           this.count ++
         } else if (flag1 == 0 && flag2 == -1) {
-          if (this.count <= 0) {
+          if (this.count <= 1) {
             return
           }
           this.count --
         } else if (flag1 == 1 && flag2 == 1) {
           this.stepCount ++
         } else {
-          if (this.stepCount <= 0) {
+          if (this.stepCount <= 1) {
             return
           }
           this.stepCount --

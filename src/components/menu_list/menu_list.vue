@@ -94,6 +94,7 @@
         }
         api.getDish(data)
           .then(resp => {
+            console.log(resp)
             if (resp.data.code == code.ERR_OK) {
               this.loading = false
               if (resp.data.data.length) {

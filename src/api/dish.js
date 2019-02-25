@@ -8,8 +8,9 @@ export function addDish(data) {
 }
 
 export function getDish(data) {
-  let url = URL + 'getDish'
-  let method = 'POST'
+  // let url = URL + 'getDish'
+  let url = 'http://serve.dapanpro.com:8000/getType'
+  let method = 'GET'
   return axiosJSON(method, url ,data)
 }
 
